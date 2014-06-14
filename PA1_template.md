@@ -48,8 +48,8 @@ median(result1[, 2])
 
 
 
-* The mean total number of steps taken per day is 10766.
-* The median total number of steps taken per day is 10765.
+* The **MEAN** total number of steps taken per day is **10766**.
+* The **MEDIAN** total number of steps taken per day is **10765**.
 
 ## What is the average daily activity pattern?
 
@@ -59,6 +59,7 @@ median(result1[, 2])
 ```r
 result2 <- data.frame(aggregate(dt1$steps, by = list(as.factor(dt1$interval)), FUN = mean))
 result2[, 1] <- as.numeric(as.character(result2[, 1]))
+names(result2) <- c("interval", "avg_steps")
 plot(result2[, 1],result2[, 2],  type = "l", main = "Average Number of Steps Taken Against 5-Minute Interval",
      xlab = "Interval", ylab = "Number of Steps", col = "steelblue")
 ```
@@ -68,16 +69,17 @@ plot(result2[, 1],result2[, 2],  type = "l", main = "Average Number of Steps Tak
 2.Find which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 
 ```r
-result2[which.max(result2[, 2]), 1]
+result2[which.max(result2[, 2]), ]
 ```
 
 ```
-## [1] 835
+##     interval avg_steps
+## 104      835     206.2
 ```
 
 
 
-Interval 835 contains the maximum number of steps.
+Interval **835** contains the maximum average of **206.2** steps.
 
 ## Imputing missing values
 
@@ -93,7 +95,7 @@ sum(!complete.cases(dt))
 
 
 
-There are 2304 missing values in the dataset.
+There are **2304** missing values in the dataset.
 
 2.Devise a strategy for filling in all of the missing values in the dataset.
 
@@ -115,8 +117,8 @@ dt2 <- cbind(steps,dt[,c(2, 3)])
 
 ```r
 result3 <- data.frame(aggregate(dt2$steps, by = list(as.factor(dt2$date)), FUN = sum))
-hist(result3[, 2], labels = TRUE, col = "steelblue", main = "Histogram of Total Steps Taken Each Day (Missing Values Imputed)", 
-     xlab = "Total Steps Taken Each Day (Missing Values Imputed)")
+hist(result3[, 2], labels = TRUE, main = "Histogram of Total Steps Taken Each Day (Missing Values Imputed)", 
+     xlab = "Total Steps Taken Each Day (Missing Values Imputed)", col = "steelblue")
 ```
 
 ![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
@@ -140,8 +142,8 @@ median(result3[, 2])
 
 
 
-* The mean total number of steps taken per day is 10766.
-* The median total number of steps taken per day is 10766.
+* The **MEAN** total number of steps taken per day is **10766**.
+* The **MEDIAN** total number of steps taken per day is **10766**.
 
 In conclusion, the **MEAN** is the same as the one calculated when omiting the missing values, while the **MEDIAN** is slightly
 larger than the one calculated when omiting the missing values. In this example, imputing missing values has pushed the **MEDIAN**

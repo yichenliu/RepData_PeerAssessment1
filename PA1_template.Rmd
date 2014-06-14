@@ -34,8 +34,8 @@ mean_result1 <- mean(result1[, 2])
 median_result1 <- median(result1[, 2])
 ```
 
-* The mean total number of steps taken per day is `r as.integer(mean_result1)`.
-* The median total number of steps taken per day is `r median_result1`.
+* The **MEAN** total number of steps taken per day is **`r as.integer(mean_result1)`**.
+* The **MEDIAN** total number of steps taken per day is **`r median_result1`**.
 
 ## What is the average daily activity pattern?
 
@@ -44,6 +44,7 @@ median_result1 <- median(result1[, 2])
 ``` {r}
 result2 <- data.frame(aggregate(dt1$steps, by = list(as.factor(dt1$interval)), FUN = mean))
 result2[, 1] <- as.numeric(as.character(result2[, 1]))
+names(result2) <- c("interval", "avg_steps")
 plot(result2[, 1],result2[, 2],  type = "l", main = "Average Number of Steps Taken Against 5-Minute Interval",
      xlab = "Interval", ylab = "Number of Steps", col = "steelblue")
 
@@ -51,14 +52,15 @@ plot(result2[, 1],result2[, 2],  type = "l", main = "Average Number of Steps Tak
 
 2.Find which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 ```{r}
-result2[which.max(result2[, 2]), 1]
+result2[which.max(result2[, 2]), ]
 ```
 
 ```{r, echo = FALSE}
-max_result2 <- result2[which.max(result2[, 2]), 1]
+max_result2a <- result2[which.max(result2[, 2]), 1]
+max_result2b <- result2[which.max(result2[, 2]), 2]
 ```
 
-Interval `r max_result2` contains the maximum number of steps.
+Interval **`r max_result2a`** contains the maximum average of **`r round(max_result2b,digits = 1)`** steps.
 
 ## Imputing missing values
 
@@ -71,7 +73,7 @@ sum(!complete.cases(dt))
 na_result3 <- sum(!complete.cases(dt))
 ```
 
-There are `r na_result3` missing values in the dataset.
+There are **`r na_result3`** missing values in the dataset.
 
 2.Devise a strategy for filling in all of the missing values in the dataset.
 
@@ -91,8 +93,8 @@ dt2 <- cbind(steps,dt[,c(2, 3)])
   number of steps taken per day.
 ```{r}
 result3 <- data.frame(aggregate(dt2$steps, by = list(as.factor(dt2$date)), FUN = sum))
-hist(result3[, 2], labels = TRUE, col = "steelblue", main = "Histogram of Total Steps Taken Each Day (Missing Values Imputed)", 
-     xlab = "Total Steps Taken Each Day (Missing Values Imputed)")
+hist(result3[, 2], labels = TRUE, main = "Histogram of Total Steps Taken Each Day (Missing Values Imputed)", 
+     xlab = "Total Steps Taken Each Day (Missing Values Imputed)", col = "steelblue")
 ```
 
 ```{r}
@@ -105,8 +107,8 @@ mean_result3 <- mean(result3[, 2])
 median_result3 <- median(result3[, 2])
 ```
 
-* The mean total number of steps taken per day is `r as.integer(mean_result3)`.
-* The median total number of steps taken per day is `r as.integer(median_result3)`.
+* The **MEAN** total number of steps taken per day is **`r as.integer(mean_result3)`**.
+* The **MEDIAN** total number of steps taken per day is **`r as.integer(median_result3)`**.
 
 In conclusion, the **MEAN** is the same as the one calculated when omiting the missing values, while the **MEDIAN** is slightly
 larger than the one calculated when omiting the missing values. In this example, imputing missing values has pushed the **MEDIAN**
